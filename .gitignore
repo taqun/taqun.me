@@ -43,3 +43,10 @@ next-env.d.ts
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+
+# firebase
+.idea
+**/node_modules/*
+**/.firebaserc
+.runtimeconfig.json
+.firebase/
