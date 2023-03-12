@@ -6,10 +6,16 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    env:
+      GOOGLE_APPLICATION_CREDENTIALS: ./service-account.json
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
           node-version: 16
+          cache: 'yarn'
+      - run: |
+          echo ${{ secrets.SERVICE_ACCOUNT }} | base64 --decode > service-account.json
       - run: yarn install
       - run: yarn build
+      - run: yarn firebase deploy --only hosting --project ${{ secrets.FIREBASE_PROJECT_ID }}
