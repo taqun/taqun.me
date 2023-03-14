@@ -12,4 +12,4 @@ jobs:
       OUT_DIR: './articles'
       IMAGE_DIR: './public'
     steps:
-      - uses: taqun/notion-to-markdown
+      - uses: taqun/notion-to-markdown@main
