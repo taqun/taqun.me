@@ -30,5 +30,7 @@ jobs:
             ${{ runner.os }}-yarn-
       - run: yarn install
         if: steps.yarn-cache.outputs.cache-hit != 'true'
+      - run: yarn list --depth=0
+      - run: ls -al
       - run: yarn build
       - run: yarn firebase deploy --only hosting --project ${{ secrets.FIREBASE_PROJECT_ID }}
