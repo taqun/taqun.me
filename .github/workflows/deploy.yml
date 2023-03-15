@@ -19,18 +19,6 @@ jobs:
           cache: 'yarn'
       - run: |
           echo ${{ secrets.SERVICE_ACCOUNT }} | base64 --decode > service-account.json
-      - id: yarn-cache-dir-path
-        run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
-      - uses: actions/cache@v3
-        id: yarn-cache
-        with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
       - run: yarn install
-        if: steps.yarn-cache.outputs.cache-hit != 'true'
-      - run: yarn list --depth=0
-      - run: ls -al
       - run: yarn build
       - run: yarn firebase deploy --only hosting --project ${{ secrets.FIREBASE_PROJECT_ID }}
