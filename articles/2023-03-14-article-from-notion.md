@@ -1,5 +1,5 @@
 ---
-title: Article from Notion
+title: Style Guide
 ---
 
 # Header1
@@ -17,6 +17,8 @@ This is header3.
 ### Inline
 
 First, This is paragraph. This is paragraph. [This is link](https://google.com/). This is paragraph. This is paragraph. `This is code`. This is paragraph. This is paragraph. **This is bold**. This is paragraph. This is paragraph.
+
+あのイーハトーヴォのすきとおった風、夏でも底に冷たさをもつ青いそら、うつくしい森で飾られたモリーオ市、郊外のぎらぎらひかる草の波。あのイーハトーヴォのすきとおった風、夏でも底に冷たさをもつ青いそら、うつくしい森で飾られたモリーオ市、郊外のぎらぎらひかる草の波。
 
 Second, This is paragraph. This is paragraph. _This is italic_. This is paragraph. This is paragraph. This is underline. This is paragraph. This is paragraph. ~~This is strikethrough~~. This is paragraph. This is paragraph. 
 
