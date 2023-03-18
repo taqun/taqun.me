@@ -6,8 +6,8 @@ import { unified } from 'unified';
 import remarkParse from 'remark-parse';
 import remarkGfm from 'remark-gfm';
 import remarkRehype from 'remark-rehype';
-import rehypeSanitize from 'rehype-sanitize';
 import rehypeStringify from 'rehype-stringify';
+import { Header } from '@/components/Header';
 
 type ArticlePageProps = {
   article: ArticleDetail;
@@ -20,9 +20,14 @@ type ArticlePageParams = {
 const ArticlePage: NextPage<ArticlePageProps> = ({ article }) => {
   return (
     <>
-      <h1>{article.title}</h1>
-      <time>{article.date}</time>
-      <div dangerouslySetInnerHTML={{ __html: article.content }} />
+      <Header />
+      <div className="container">
+        <article>
+          <h1>{article.title}</h1>
+          <time>{article.date}</time>
+          <div dangerouslySetInnerHTML={{ __html: article.content }} />
+        </article>
+      </div>
     </>
   );
 };
@@ -68,9 +73,8 @@ export const getStaticProps: GetStaticProps<
   const content = await unified()
     .use(remarkParse)
     .use(remarkGfm)
-    .use(remarkRehype)
-    .use(rehypeSanitize)
-    .use(rehypeStringify)
+    .use(remarkRehype, { allowDangerousHtml: true })
+    .use(rehypeStringify, { allowDangerousHtml: true })
     .process(articleData.content);
 
   const article = {

@@ -2,8 +2,10 @@ import { GetStaticProps, NextPage } from 'next';
 import Head from 'next/head';
 import fs from 'fs';
 import matter from 'gray-matter';
+
 import { Article } from '@/types/Article';
-import Link from 'next/link';
+import { Header } from '@/components/Header';
+import { ArticleIndex } from '@/components/ArticleIndex';
 
 type IndexPageProps = {
   articles: Article[];
@@ -18,17 +20,9 @@ const IndexPage: NextPage<IndexPageProps> = ({ articles }) => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div>
-        <ul>
-          {articles.map((article) => {
-            return (
-              <li key={article.slug}>
-                <time dateTime={article.date}>{article.date}</time>
-                <Link href={`/articles/${article.slug}`}>{article.title}</Link>
-              </li>
-            );
-          })}
-        </ul>
+      <div className="container">
+        <Header isTopPage={true} />
+        <ArticleIndex articles={articles} />
       </div>
     </>
   );
@@ -42,17 +36,22 @@ export const getStaticProps: GetStaticProps<IndexPageProps> = async () => {
       withFileTypes: true,
     });
 
-    dirents.forEach((dirent) => {
-      const fileContents = fs.readFileSync(
-        `./articles/${dirent.name}`,
-        'utf-8'
-      );
-      const articleData = matter(fileContents);
-      const date = dirent.name.match(/^\d{4}-\d{2}-\d{2}/)?.[0];
+    const sortedFiles = dirents
+      .map((dirent) => {
+        return dirent.name;
+      })
+      .sort()
+      .reverse();
+
+    sortedFiles.forEach((fileName) => {
+      const date = fileName.match(/^\d{4}-\d{2}-\d{2}/)?.[0];
 
       if (date) {
+        const fileContents = fs.readFileSync(`./articles/${fileName}`, 'utf-8');
+        const articleData = matter(fileContents);
+
         articles.push({
-          slug: dirent.name.replace('.md', ''),
+          slug: fileName.replace('.md', ''),
           date,
           title: articleData.data.title,
         });
