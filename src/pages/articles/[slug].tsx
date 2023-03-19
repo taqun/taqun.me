@@ -1,13 +1,16 @@
-import { ArticleDetail } from '@/types/Article';
-import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import fs from 'fs';
 import matter from 'gray-matter';
-import { unified } from 'unified';
-import remarkParse from 'remark-parse';
-import remarkGfm from 'remark-gfm';
-import remarkRehype from 'remark-rehype';
+import { GetStaticPaths, GetStaticProps } from 'next';
+import Head from 'next/head';
 import rehypeStringify from 'rehype-stringify';
-import { Header } from '@/components/Header';
+import remarkGfm from 'remark-gfm';
+import remarkParse from 'remark-parse';
+import remarkRehype from 'remark-rehype';
+import { unified } from 'unified';
+
+import Layout from '@/components/Layout';
+import { NextPageWithLayout } from '@/pages/_app';
+import { ArticleDetail } from '@/types/Article';
 
 type ArticlePageProps = {
   article: ArticleDetail;
@@ -17,19 +20,23 @@ type ArticlePageParams = {
   slug: string;
 };
 
-const ArticlePage: NextPage<ArticlePageProps> = ({ article }) => {
+const ArticlePage: NextPageWithLayout<ArticlePageProps> = ({ article }) => {
   return (
     <>
-      <Header />
-      <div className="container">
-        <article>
-          <h1>{article.title}</h1>
-          <time>{article.date}</time>
-          <div dangerouslySetInnerHTML={{ __html: article.content }} />
-        </article>
-      </div>
+      <Head>
+        <title>{`${article.title} | taqun.me`}</title>
+      </Head>
+      <article>
+        <h1>{article.title}</h1>
+        <time>{article.date}</time>
+        <div dangerouslySetInnerHTML={{ __html: article.content }} />
+      </article>
     </>
   );
+};
+
+ArticlePage.getLayout = (page) => {
+  return <Layout>{page}</Layout>;
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
