@@ -3,6 +3,7 @@ import { AppProps } from 'next/app';
 import { ReactElement, ReactNode } from 'react';
 
 import '@/styles/common.scss';
+import GTM from '@/components/GTM';
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -15,5 +16,10 @@ type AppPropsWithLayout = AppProps & {
 export default function App({ Component, pageProps }: AppPropsWithLayout) {
   const getLayout = Component.getLayout ?? ((page) => page);
 
-  return getLayout(<Component {...pageProps} />);
+  return getLayout(
+    <>
+      <GTM />
+      <Component {...pageProps} />
+    </>
+  );
 }
