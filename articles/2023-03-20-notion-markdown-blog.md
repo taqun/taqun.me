@@ -1,5 +1,5 @@
 ---
-title: NotionをヘッドレスCMSにしてSSGでブログを作る
+title: NotionからMarkdownファイルを経由してSSGでブログをつくる
 ---
 
 数年に一度訪れるブログ作ろうかな期がきたので、Notion をヘッドレス CMS として使って Notion API で Markdown ファイルを出力、それを Next.js で SSG して HTML を出力するブログを作った。

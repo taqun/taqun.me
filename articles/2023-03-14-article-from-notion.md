@@ -2,6 +2,8 @@
 title: Style Guide
 ---
 
+This is a style guide for blog.
+
 # Header1
 
 This is header 1.
