@@ -35,6 +35,7 @@ Second, This is paragraph. This is paragraph. _This is italic_. This is paragrap
   - foo2
     - foo3
     - bar3
+    - baz3
   - bar2
 - baz
 
