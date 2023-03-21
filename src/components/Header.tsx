@@ -10,17 +10,15 @@ type HeaderProps = {
 export const Header: FC<HeaderProps> = ({ isTopPage = false }) => {
   return (
     <header className={styles.header}>
-      <div className="container">
-        {isTopPage ? (
-          <h1>
-            <Link href="/">taqun.me</Link>
-          </h1>
-        ) : (
-          <p>
-            <Link href="/">taqun.me</Link>
-          </p>
-        )}
-      </div>
+      {isTopPage ? (
+        <h1>
+          <Link href="/">taqun.me</Link>
+        </h1>
+      ) : (
+        <p>
+          <Link href="/">taqun.me</Link>
+        </p>
+      )}
     </header>
   );
 };
