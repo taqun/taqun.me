@@ -27,12 +27,15 @@
     "eslint-plugin-unused-imports": "^2.0.0",
     "firebase-tools": "^11.24.1",
     "gray-matter": "^4.0.3",
+    "mdast": "^3.0.0",
     "prettier": "^2.8.4",
     "rehype-stringify": "^9.0.3",
     "remark-gfm": "^3.0.1",
     "remark-parse": "^10.0.1",
     "remark-rehype": "^10.1.0",
     "sass": "^1.58.3",
-    "unified": "^10.1.2"
+    "unified": "^10.1.2",
+    "unist-util-is": "^5.2.1",
+    "unist-util-select": "^4.0.3"
   }
 }

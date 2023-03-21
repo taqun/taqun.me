@@ -5,5 +5,6 @@ export type Article = {
 };
 
 export type ArticleDetail = Article & {
+  description: string;
   content: string;
 };

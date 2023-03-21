@@ -11,6 +11,7 @@ import { unified } from 'unified';
 import Layout from '@/components/Layout';
 import { NextPageWithLayout } from '@/pages/_app';
 import { ArticleDetail } from '@/types/Article';
+import { remarkDescription } from '@/utils/unifiedPlugins';
 
 type ArticlePageProps = {
   article: ArticleDetail;
@@ -25,6 +26,7 @@ const ArticlePage: NextPageWithLayout<ArticlePageProps> = ({ article }) => {
     <>
       <Head>
         <title>{`${article.title} | taqun.me`}</title>
+        <meta name="description" content={article.description} />
       </Head>
       <article>
         <header>
@@ -82,6 +84,7 @@ export const getStaticProps: GetStaticProps<
   const content = await unified()
     .use(remarkParse)
     .use(remarkGfm)
+    .use(remarkDescription)
     .use(remarkRehype, { allowDangerousHtml: true })
     .use(rehypeStringify, { allowDangerousHtml: true })
     .process(articleData.content);
@@ -90,6 +93,7 @@ export const getStaticProps: GetStaticProps<
     slug,
     date,
     title: articleData.data.title,
+    description: content.data.description as string,
     content: content.toString(),
   };
 
