@@ -27,8 +27,10 @@ const ArticlePage: NextPageWithLayout<ArticlePageProps> = ({ article }) => {
         <title>{`${article.title} | taqun.me`}</title>
       </Head>
       <article>
-        <h1>{article.title}</h1>
-        <time>{article.date}</time>
+        <header>
+          <h1>{article.title}</h1>
+          <time>{article.date}</time>
+        </header>
         <div dangerouslySetInnerHTML={{ __html: article.content }} />
       </article>
     </>
