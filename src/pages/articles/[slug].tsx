@@ -2,6 +2,7 @@ import fs from 'fs';
 import matter from 'gray-matter';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 import rehypeStringify from 'rehype-stringify';
 import remarkGfm from 'remark-gfm';
 import remarkParse from 'remark-parse';
@@ -11,7 +12,10 @@ import { unified } from 'unified';
 import Layout from '@/components/Layout';
 import { NextPageWithLayout } from '@/pages/_app';
 import { ArticleDetail } from '@/types/Article';
+import { getPreviewArticle, getPreviewDate } from '@/utils/preview';
 import { remarkDescription } from '@/utils/unifiedPlugins';
+
+const IS_DEV = process.env.NODE_ENV === 'development';
 
 type ArticlePageProps = {
   article: ArticleDetail;
@@ -22,6 +26,15 @@ type ArticlePageParams = {
 };
 
 const ArticlePage: NextPageWithLayout<ArticlePageProps> = ({ article }) => {
+  const router = useRouter();
+  if (router.isFallback) {
+    return (
+      <>
+        <p>Preview Loading...</p>
+      </>
+    );
+  }
+
   return (
     <>
       <Head>
@@ -61,7 +74,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
   return {
     paths,
-    fallback: false,
+    fallback: IS_DEV ? true : false,
   };
 };
 
@@ -70,15 +83,40 @@ export const getStaticProps: GetStaticProps<
   ArticlePageParams
 > = async ({ params }) => {
   const slug = params?.slug;
-  const date = slug?.match(/^\d{4}-\d{2}-\d{2}/)?.[0];
+  if (slug == null) return { notFound: true };
 
-  if (slug == null || date == null) {
+  const date = slug?.match(/^\d{4}-\d{2}-\d{2}/)?.[0];
+  let fileContents = null;
+
+  if (IS_DEV) {
+    // development
+    if (date != null) {
+      // from markdown file
+      fileContents = fs.readFileSync(`./articles/${slug}.md`);
+    } else {
+      // from notion
+      const article = await getPreviewArticle(slug);
+      if (article) {
+        fileContents = article.contents;
+      }
+    }
+  } else {
+    // production
+    if (date == null) {
+      return {
+        notFound: true,
+      };
+    }
+
+    fileContents = fs.readFileSync(`./articles/${slug}.md`);
+  }
+
+  if (fileContents == null) {
     return {
       notFound: true,
     };
   }
 
-  const fileContents = fs.readFileSync(`./articles/${slug}.md`);
   const articleData = matter(fileContents);
 
   const content = await unified()
@@ -91,7 +129,7 @@ export const getStaticProps: GetStaticProps<
 
   const article = {
     slug,
-    date,
+    date: date || getPreviewDate(),
     title: articleData.data.title,
     description: content.data.description as string,
     content: content.toString(),
