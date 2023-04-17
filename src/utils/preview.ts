@@ -4,8 +4,6 @@ import NotionClient from '@/api/notion';
 import { Article } from '@/model/Article';
 
 export const getPreviewArticle = async (slug: string) => {
-  console.log('getPreviewArticle');
-
   const notionToken = process.env.NOTION_TOKEN;
   const notionDatabaseId = process.env.NOTION_DATABASE_ID;
 

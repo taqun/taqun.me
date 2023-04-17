@@ -13,7 +13,11 @@ import Layout from '@/components/Layout';
 import { NextPageWithLayout } from '@/pages/_app';
 import { ArticleDetail } from '@/types/Article';
 import { getPreviewArticle, getPreviewDate } from '@/utils/preview';
-import { remarkDescription } from '@/utils/unifiedPlugins';
+import {
+  imageCaptionHandler,
+  remarkDescription,
+  remarkImageCaption,
+} from '@/utils/unifiedPlugins';
 
 const IS_DEV = process.env.NODE_ENV === 'development';
 
@@ -123,7 +127,13 @@ export const getStaticProps: GetStaticProps<
     .use(remarkParse)
     .use(remarkGfm)
     .use(remarkDescription)
-    .use(remarkRehype, { allowDangerousHtml: true })
+    .use(remarkImageCaption)
+    .use(remarkRehype, {
+      allowDangerousHtml: true,
+      handlers: {
+        'image-with-caption': imageCaptionHandler,
+      },
+    })
     .use(rehypeStringify, { allowDangerousHtml: true })
     .process(articleData.content);
 

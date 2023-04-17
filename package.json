@@ -37,6 +37,7 @@
     "sass": "^1.58.3",
     "unified": "^10.1.2",
     "unist-util-is": "^5.2.1",
-    "unist-util-select": "^4.0.3"
+    "unist-util-select": "^4.0.3",
+    "unist-util-visit-parents": "^5.1.3"
   }
 }
