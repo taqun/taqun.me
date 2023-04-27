@@ -3,6 +3,7 @@ import matter from 'gray-matter';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
+import rehypeExternalLinks from 'rehype-external-links';
 import rehypeStringify from 'rehype-stringify';
 import remarkGfm from 'remark-gfm';
 import remarkParse from 'remark-parse';
@@ -133,6 +134,10 @@ export const getStaticProps: GetStaticProps<
       handlers: {
         'image-with-caption': imageCaptionHandler,
       },
+    })
+    .use(rehypeExternalLinks, {
+      target: '_blank',
+      rel: ['noopener', 'noreferrer'],
     })
     .use(rehypeStringify, { allowDangerousHtml: true })
     .process(articleData.content);
