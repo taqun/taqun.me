@@ -33,6 +33,8 @@ Second, This is paragraph. This is paragraph. _This is italic_. This is paragrap
 # Unordered List
 
 - foo
+  - [link](https://google.com/)
+  - **bold**
 - bar
   - foo2
     - foo3
@@ -46,6 +48,8 @@ And, this is paragraph.
 # Ordered List
 
 1. one
+   1. <u>underline</u>
+   1. _italic_
 1. two
    1. two-one
    1. two-two
