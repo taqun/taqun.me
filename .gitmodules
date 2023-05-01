@@ -1,3 +1,4 @@
 [submodule "notion-to-markdown"]
 	path = notion-to-markdown
 	url = https://github.com/taqun/notion-to-markdown.git
+	branch = main
