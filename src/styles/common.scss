@@ -84,7 +84,7 @@ figure {
   }
 
   figurecaption {
-    font-size: 16px;
+    font-size: 0.9rem;
   }
 }
 
@@ -129,12 +129,16 @@ article {
 }
 
 @media (max-width: bp.$mobile) {
+  :root {
+    font-size: 16px;
+  }
+
   h1 {
-    font-size: 1.5rem;
+    font-size: 1.6rem;
   }
 
   h2 {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
   }
 
   h3 {

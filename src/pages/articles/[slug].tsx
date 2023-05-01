@@ -20,6 +20,8 @@ import {
   remarkImageCaption,
 } from '@/utils/unifiedPlugins';
 
+import styles from './[slug].module.scss';
+
 const IS_DEV = process.env.NODE_ENV === 'development';
 
 type ArticlePageProps = {
@@ -46,7 +48,7 @@ const ArticlePage: NextPageWithLayout<ArticlePageProps> = ({ article }) => {
         <title>{`${article.title} | taqun.me`}</title>
         <meta name="description" content={article.description} />
       </Head>
-      <article>
+      <article className={styles.article}>
         <header>
           <h1>{article.title}</h1>
           <time>{article.date}</time>
