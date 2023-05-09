@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build && next export",
+    "build": "next build && next-sitemap && next export",
     "start": "next start",
     "lint": "next lint"
   },
@@ -29,6 +29,7 @@
     "firebase-tools": "^11.24.1",
     "gray-matter": "^4.0.3",
     "mdast": "^3.0.0",
+    "next-sitemap": "^4.0.9",
     "prettier": "^2.8.4",
     "rehype-external-links": "^2.0.1",
     "rehype-stringify": "^9.0.3",
