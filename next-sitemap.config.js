@@ -1,8 +1,5 @@
 /** @type {import('next-sitemap').IConfig} */
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const fs = require('fs');
-
 module.exports = {
   siteUrl: 'https://taqun.me',
   transform: async (config, path) => {
